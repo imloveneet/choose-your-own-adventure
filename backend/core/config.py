@@ -9,6 +9,9 @@ class Settings(BaseSettings):
   DATABASE_URL: str
 
   ALLOWED_ORIGINS: str = ""
+  OLLAMA_BASE_URL: str = ""
+  OLLAMA_API_KEY: str = ""
+  OLLAMA_MODEL: str = ""
 
   @field_validator("ALLOWED_ORIGINS")
   def parse_allowed_origins(cls, v: str) -> List[str]:

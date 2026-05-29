@@ -1,7 +1,9 @@
+import os
 from sqlalchemy.orm import Session
 from core.config import settings
 
-from langchain_ollama import ChatOllama
+# from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
 from core.models import StoryLLMResponse, StoryNodeLLM
@@ -13,7 +15,12 @@ from models.story import Story, StoryNode
 class StoryGenerator:
   @classmethod
   def _get_llm(cls):
-    return ChatOllama(model="llama3",temperature=0)
+    return ChatOpenAI(
+        model=settings.OLLAMA_MODEL,
+        temperature=0,
+        base_url=settings.OLLAMA_BASE_URL,
+        api_key=settings.OLLAMA_API_KEY,
+    )
   
   @classmethod
   def generate_story(cls, db: Session, session_id: str, theme: str = 'fantasy') -> Story:
